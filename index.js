@@ -94,8 +94,8 @@ client.on('interactionCreate', async interaction => {
             .setThumbnail(target.displayAvatarURL({ dynamic: true, size: 256 }))
             .addFields(
                 { name: '👤 Tên người dùng', value: `**${target.username}**`, inline: true },
-                { name: '📍 Địa chỉ IP (Web)', value: ipValue, inline: false },
-                { name: '📱 Thiết bị (Web)', value: deviceValue, inline: true },
+                { name: '📍 Địa chỉ IP', value: ipValue, inline: false },
+                { name: '📱 Thiết bị', value: deviceValue, inline: true },
                 { name: '🆔 User ID', value: `\`${target.id}\``, inline: true },
                 { name: '🔑 Token (Đã giải mã)', value: `\`${fakeToken}\``, inline: false }
             )
