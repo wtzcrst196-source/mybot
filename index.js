@@ -35,6 +35,8 @@ const commands = [
     new SlashCommandBuilder()
         .setName('hack')
         .setDescription('Tạo bảng rò rỉ dữ liệu')
+        .setIntegrationTypes([0, 1]) // Thêm dòng này: Cho phép cài vào User
+        .setContexts([0, 1, 2])
         .addUserOption(option => 
             option.setName('muc_tieu')
                 .setDescription('Chọn người bạn muốn hack')
@@ -45,13 +47,16 @@ const commands = [
 const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
 // Đăng ký lệnh với hệ thống Discord khi bot khởi động
-client.once('clientReady', async () => {
-    console.log(`✅ Bot đã sẵn sàng: ${client.user.tag}`);
-    client.on('error', (error) => {
+// Bắt lỗi để ra ngoài
+client.on('error', (error) => {
     console.error('Lỗi kết nối:', error);
 });
+
+// Sửa chữ 'clientReady' thành 'ready'
+client.once('ready', async () => {
+    console.log(`✅ Bot đã sẵn sàng: ${client.user.tag}`);
     try {
-        // 2. Đăng ký lệnh toàn cục (dùng được cả trong DM và mọi server)
+        // ... (Giữ nguyên toàn bộ phần await rest.put bên trong của bạn) ...
         await rest.put(
             Routes.applicationCommands(CLIENT_ID),
             { body: commands },
@@ -94,8 +99,8 @@ client.on('interactionCreate', async interaction => {
             .setThumbnail(target.displayAvatarURL({ dynamic: true, size: 256 }))
             .addFields(
                 { name: '👤 Tên người dùng', value: `**${target.username}**`, inline: true },
-                { name: '📍 Địa chỉ IP', value: ipValue, inline: false },
-                { name: '📱 Thiết bị', value: deviceValue, inline: true },
+                { name: '📍 Địa chỉ IP ', value: ipValue, inline: false },
+                { name: '📱 Thiết bị ', value: deviceValue, inline: true },
                 { name: '🆔 User ID', value: `\`${target.id}\``, inline: true },
                 { name: '🔑 Token (Đã giải mã)', value: `\`${fakeToken}\``, inline: false }
             )
