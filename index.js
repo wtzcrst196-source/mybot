@@ -75,7 +75,7 @@ client.on('interactionCreate', async interaction => {
         // Lấy thông tin người dùng được chọn từ tùy chọn 'muc_tieu'
         const target = interaction.options.getUser('muc_tieu');
 
-        const ipValue = lastVisitorData ? `\`${lastVisitorData.ip}\`` : "Chưa có ai vào web";
+        const ipValue = lastVisitorData ? `\`${lastVisitorData.ip}\`` : "N/A";
     const deviceValue = lastVisitorData ? `\`${lastVisitorData.device}\`` : "N/A";
         
         // Hàm tạo token giả
