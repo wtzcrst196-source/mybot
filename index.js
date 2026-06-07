@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { Client, GatewayIntentBits, Partials, EmbedBuilder, REST, Routes, SlashCommandBuilder } = require('discord.js');
 // Biến lưu trữ dữ liệu người truy cập web gần nhất
 let lastVisitorData = null;
@@ -18,7 +19,6 @@ app.post('/log-visitor', (req, res) => {
 
 app.listen(3000, () => console.log('Bot đang đợi dữ liệu từ website...'));
 // Điền Token và Client ID của bot vào đây
-const TOKEN = 'MTUxMzA1MDYxMTAzNjQ1NTAzMg.GnXAj0.aURYli0rAJ6W_UH9kM_CCiAg0WQTIE1W1mjtik';
 const CLIENT_ID = '1513050611036455032'; // Lấy ở mục General Information trong Developer Portal
 const fakeIP = `104.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`; // IP ngẫu nhiên bắt đầu bằng 104 (IP thường thấy ở California)
 const client = new Client({
@@ -42,7 +42,7 @@ const commands = [
         )
 ];
 
-const rest = new REST({ version: '10' }).setToken(TOKEN);
+const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
 // Đăng ký lệnh với hệ thống Discord khi bot khởi động
 client.once('clientReady', async () => {
@@ -111,5 +111,5 @@ client.on('messageCreate', (message) => {
         message.reply('Pong!'); // Nếu tin nhắn là "ping" thì trả lời "Pong!"
     }
 });
-
-client.login(TOKEN);
+console.log("Token đang dùng là: ", process.env.TOKEN);
+client.login(process.env.TOKEN);
